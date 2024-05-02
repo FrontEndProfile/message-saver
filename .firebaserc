@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "message-saver-5fbc1": {
+      "hosting": {
+        "message-saver": [
+          "message-saver-5fbc1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "message-saver-5fbc1"
+  }
+}

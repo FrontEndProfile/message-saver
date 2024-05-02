@@ -1,0 +1,11 @@
+{
+  "hosting": [
+    {
+      "target": "message-saver",
+      "source": ".",
+      "frameworksBackend": {
+        "region": "us-central1"
+      }
+    }
+  ]
+}

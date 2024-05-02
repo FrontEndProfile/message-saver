@@ -1,0 +1,13 @@
+<div class="border rounded p-5">
+    <form [formGroup]="editorForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="tittle" class="form-label">Message Tittle</label>
+            <input type="text" class="form-control bg-transparent" formControlName="messageTitle">
+        </div>
+        <div class="mb-3">
+            <label for="messageTemplate" class="form-label">Message Template</label>
+            <quill-editor formControlName="messageTemplate"></quill-editor>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

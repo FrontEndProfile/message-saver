@@ -1,0 +1,19 @@
+
+
+
+<div cdkDropList class="example-list p-5 border rounded" (cdkDropListDropped)="drop($event)">
+    <div class="d-block w-100 text-center mb-4">
+        <h2>Message Template Save</h2>
+    </div>
+
+
+    @for (card of view$ | async; track card) {
+    <div class="card col-7 example-box m-2" cdkDrag>
+        <h3 class="card-header py-3">{{card.messageTitle}}</h3>
+        <div class="example-custom-placeholder col-7" *cdkDragPlaceholder> </div>
+            <div class="card-body ">
+                <p class="card-text">{{card.messageTemplate}}</p>
+            </div>
+    </div>
+    }
+</div>

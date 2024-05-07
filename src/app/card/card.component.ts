@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import { DocumentData, Firestore ,collection , collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -7,10 +7,8 @@ import { map } from 'rxjs/operators';
 
 interface Card {
   id: string;
-  messageTitle:string;
-  messageTemplate:string;
-
-  // Define other properties of your card here
+  messageTitle: string;
+  messageTemplate: string;
 }
 
 
@@ -20,45 +18,35 @@ interface Card {
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
-  firestore : Firestore = inject(Firestore);
-  view$: Observable<any[]>
+  
+  cardPositions: Card[] = [];
+  
+  constructor() { }
 
-  cardPositions: string[] = [
-    // '001',
-    // '002',
-    // '003',
-  ];
+  ngOnInit(): void {
+    this.loadPositions();
 
-  // see all cards for admin 
-  constructor() {
-    const aCollection = collection(this.firestore, 'templates')
-    this.view$ = collectionData(aCollection)
+    console.log("NG pr data :  ",this.cardPositions)
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Card[]>): void {
     moveItemInArray(this.cardPositions, event.previousIndex, event.currentIndex);
     this.savePositions();
   }
 
-  savePositions() {
+  savePositions(): void {
     localStorage.setItem('cardPositions', JSON.stringify(this.cardPositions));
   }
-  // savePositions() {
-  //   this.view$.subscribe((cards) => {
-  //     cards.forEach((card, index) => {
-  //       this.firestore.collection('templates').doc(card.id).update({ position: index });
-  //     });
-  //   });
-  // }
 
-  loadPositions() {
+  loadPositions(): void {
     const storedPositions = localStorage.getItem('cardPositions');
     if (storedPositions) {
-      this.cardPositions = JSON.parse(storedPositions);
+      try {
+        this.cardPositions = JSON.parse(storedPositions);
+      } catch (error) {
+        console.error('Error parsing stored positions:', error);
+      }
     }
   }
-
-  ngOnInit() {
-    this.loadPositions();
-  }
+  
 }

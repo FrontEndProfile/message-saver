@@ -16,8 +16,8 @@
   </nav>
 </header>
 
-<section class="bg-body-tertiary min-vh-100 p-5">
-  <div class="container">
+<section class="bg-body-tertiary p-md-2  p-md-5 py-5">
+  <div class="container my-md-5">
     <div class="row">
       <router-outlet></router-outlet>
     </div>
@@ -27,10 +27,10 @@
 <div class="container">
   <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Create Message</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">View Messages</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Reload Webapp</a></li>
+      <li class="nav-item"><a routerLink="/create" class="nav-link px-2 text-body-secondary">Create Message</a></li>
+      <li class="nav-item"><a routerLink="/" class="nav-link px-2 text-body-secondary">View Messages</a></li>
+      <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Reload Webapp</a></li>
     </ul>
-    <p class="text-center text-body-secondary">© 2024 ABC, Inc</p>
+    <p class="text-center text-body-secondary">© 2024 FrontendProfile, Inc</p>
   </footer>
 </div>

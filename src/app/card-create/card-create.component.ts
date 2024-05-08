@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { collection, doc, setDoc } from '@angular/fire/firestore';
+import { arrayUnion, collection, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { QuillModule } from 'ngx-quill'
+
+import { Router } from '@angular/router'; // Import Router
+
 
 
 @Component({
@@ -16,6 +19,7 @@ export class CardCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private firestore: Firestore, 
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -26,30 +30,37 @@ export class CardCreateComponent implements OnInit {
   }
 
   async onSubmit() {
-    console.log(this.editorForm.value);
     const formValues = this.editorForm.value;
 
     // Create a new object based on formValues
-    const newObj = {
+    const newCard = {
       messageTitle: formValues.messageTitle,
       messageTemplate: formValues.messageTemplate
     };
 
-    // Get existing data from localStorage
-    const storedData = localStorage.getItem('cardPositions');
-    let cardPositions: { messageTitle: string, messageTemplate: string }[] = [];
+    try {
+      // Get the existing document from Firestore
+      const docRef = doc(this.firestore, 'positions', 'cardPositions');
+      const docSnap = await getDoc(docRef);
 
-    if (storedData) {
-      cardPositions = JSON.parse(storedData);
+      if (docSnap.exists()) {
+        // If the document exists, update its array of cards
+        await updateDoc(docRef, {
+          positions: arrayUnion(newCard)
+        });
+        console.log('New card added to Firestore.');
+        // Reset the form
+      this.editorForm.reset();
+      this.router.navigate(['/']);
+
+
+      } else {
+        console.error('Document does not exist.');
+      }
+    } catch (error) {
+      console.error('Error updating document:', error);
     }
-    // Push the new object into the array
-    cardPositions.push(newObj);
-    // Save updated array back to localStorage
-    localStorage.setItem('cardPositions', JSON.stringify(cardPositions));
-
-    const aCollection = collection(this.firestore, 'templates');
-    const customDocRef = doc(aCollection, );
-    await setDoc(customDocRef, newObj);
-  
   }
+
+  
 }

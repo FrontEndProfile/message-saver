@@ -3,13 +3,36 @@
       <h2>Message Template Save</h2>
     </div>
     
-    @for (card of cardPositions; track card) {
-      <div class="card col-7 example-box m-2" cdkDrag>
-        <h3 class="card-header py-3">{{ card.messageTitle }}</h3>
-        <div class="example-custom-placeholder col-7" *cdkDragPlaceholder> </div>
-        <div class="card-body ">
-          <p class="card-text">{{ card.messageTemplate }}</p>
+    @for (card of cardPositions;  track card ;  let i = $index ) {
+      <div class="card col-9 example-box m-2 mx-auto mb-3" cdkDrag>
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="fs-3 m-0">
+            {{ card.messageTitle }}
+          </h2>
+          <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-danger py-1 pb-2 px-2" (click)="deleteCard(i)">
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M424 64h-88V48c0-26.51-21.49-48-48-48h-64c-26.51 0-48 21.49-48 48v16H88c-22.091 0-40 17.909-40 40v32c0 8.837 7.163 16 16 16h384c8.837 0 16-7.163 16-16v-32c0-22.091-17.909-40-40-40zM208 48c0-8.82 7.18-16 16-16h64c8.82 0 16 7.18 16 16v16h-96zM78.364 184a5 5 0 0 0-4.994 5.238l13.2 277.042c1.22 25.64 22.28 45.72 47.94 45.72h242.98c25.66 0 46.72-20.08 47.94-45.72l13.2-277.042a5 5 0 0 0-4.994-5.238zM320 224c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16z" fill="#fff" opacity="1" data-original="#000000" class=""></path></g></svg>
+            </button>
+          </div>
         </div>
+
+
+
+        <!-- Delete button for each card -->
+        <div class="example-custom-placeholder col-9 mx-auto" *cdkDragPlaceholder> </div>
+        <div class="card-body position-relative py-4">
+          <div class="position-absolute w-100 start-0 d-flex justify-content-end align-items-center px-3">
+            <button class="btn btn-success py-1 pb-2 px-3" (click)="copyToClipboard(card.messageTemplate)">
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" x="0" y="0" viewBox="0 0 32 32" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g transform="matrix(1.0999999999999994,0,0,1.0999999999999994,-1.5999999999999908,-1.5999999999999908)"><path d="M25 2H11a3 3 0 0 0-3 3v1H7a3 3 0 0 0-3 3v18a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-1h1a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3zm-3 25a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h1v15a3 3 0 0 0 3 3h11zm4-4a1 1 0 0 1-1 1H11a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1z" fill="#fff" opacity="1" data-original="#000000" class=""></path></g></svg>
+            </button>
+          </div>
+
+          <span [innerHTML]="card.messageTemplate"></span>
+
+        </div>
+
+
+
       </div>
     }
 </div>

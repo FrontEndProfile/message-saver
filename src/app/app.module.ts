@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { PasswordComponent } from './password/password.component';
 
 
 
@@ -22,6 +23,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     AppComponent,
     CardComponent,
     CardCreateComponent,
+    PasswordComponent,
   ],
   imports: [
     BrowserModule,

@@ -57,7 +57,7 @@ savePositionsToLocalStorage(data: any[]): void {
   ngOnInit(): void {
     // Load positions from Firestore on component initialization
     this.loadPositionsFromLocalStorage();
-    
+
   }
 
   // Method to handle dropping cards

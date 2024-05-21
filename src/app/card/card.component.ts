@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { QuillModule } from 'ngx-quill'
 
 
 // Interface for the card structure
@@ -26,7 +30,15 @@ export class CardComponent implements OnInit {
   // Observable to hold the data retrieved from Firestore
   cards_list$: Observable<Card[]> | undefined;
 
-  constructor(private firestore: Firestore,private clipboard: Clipboard, private snackBar: MatSnackBar ) {
+
+      // Variables to manage editing
+      editingIndex: number | null = null; // Index of the card being edited
+      editForm: FormGroup | any; // FormGroup for edit form
+
+  constructor(private firestore: Firestore,private clipboard: Clipboard, private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    private fb: FormBuilder
+   ) {
     const aCollection = collection(this.firestore, 'positions');
     this.cards_list$ = collectionData(aCollection, { idField: 'id' }).pipe(
       map((data: any[]) => {
@@ -58,7 +70,50 @@ savePositionsToLocalStorage(data: any[]): void {
     // Load positions from Firestore on component initialization
     this.loadPositionsFromLocalStorage();
 
+
+     // Initialize editForm with FormBuilder
+     this.editForm = this.fb.group({
+      messageTitle: [''], // Initialize form control for messageTitle
+      messageTemplate: [''] // Initialize form control for messageTemplate
+      // Add more form controls as needed
+  });
+
+
+  
+
   }
+
+
+      // Method to open edit form
+    // Method to open edit form
+    editCard(index: number): void {
+      this.editingIndex = index;
+      const card = this.cardPositions[index];
+      // Patch form values with data of the card being edited
+      this.editForm.patchValue({
+          messageTitle: card.messageTitle,
+          messageTemplate: card.messageTemplate
+          // Patch more form values as needed
+      });
+  }
+
+
+
+    // Method to update card data
+    updateCard(index: number): void {
+      const updatedCard = this.editForm.value; // Get updated form values
+      this.cardPositions[index] = { ...updatedCard }; // Update card data in array
+      this.savePositions(); // Save updated positions
+      this.editingIndex = null; // Close edit form
+  }
+  
+  // Method to cancel editing
+  cancelEdit(): void {
+      this.editingIndex = null; // Close edit form
+  }
+
+
+
 
   // Method to handle dropping cards
   drop(event: CdkDragDrop<Card[]>): void {
@@ -135,6 +190,8 @@ async deleteCard(index: number): Promise<void> {
     this.snackBar.open('Message copied to clipboard', 'Close', { duration: 2000 });
 
   }
+
+
 
 
 }

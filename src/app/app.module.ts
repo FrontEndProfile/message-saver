@@ -15,7 +15,17 @@ import { QuillModule } from 'ngx-quill';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { PasswordComponent } from './password/password.component';
+import { UpdateComponent } from './update/update.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
+
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -24,6 +34,7 @@ import { PasswordComponent } from './password/password.component';
     CardComponent,
     CardCreateComponent,
     PasswordComponent,
+    UpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +47,9 @@ import { PasswordComponent } from './password/password.component';
     NgbModule,
     QuillModule.forRoot(),
     provideFirebaseApp(() => initializeApp({"projectId":"message-saver-5fbc1","appId":"1:243320602473:web:5cddccd5d784187b4407f8","storageBucket":"message-saver-5fbc1.appspot.com","apiKey":"AIzaSyAuaIw33rqwz11PfD8sX3P_370TBYJb7AA","authDomain":"message-saver-5fbc1.firebaseapp.com","messagingSenderId":"243320602473"})),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    MatDialogModule, MatButtonModule , MatDividerModule , MatIconModule,
+    MatFormFieldModule, MatInputModule, MatSelectModule
 
   ],
   providers: [
